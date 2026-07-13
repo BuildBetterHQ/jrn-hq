@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junk Removal Now — HQ</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#141412">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="JRN HQ">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Barlow:wght@400;600;700;800&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141412;          /* chalkboard black */
+  --asphalt:#1e1f1a;      /* card surface */
+  --asphalt-2:#26271f;    /* raised surface */
+  --line:#35362b;
+  --haul:#9bc53d;         /* flyer green */
+  --haul-deep:#5a7d1e;
+  --haul-dark:#3d5314;
+  --bone:#f2efe6;         /* off-white */
+  --dust:#b8b4a4;         /* muted text */
+  --cash:#f5a623;         /* money orange (hand-truck orange) */
+  --alert:#e2574c;
+  --fb:#4a76c9;
+  --cl:#7d5bb0;
+  --radius:10px;
+  --font-display:'Anton', 'Arial Narrow', sans-serif;
+  --font-marker:'Permanent Marker', cursive;
+  --font-body:'Barlow', -apple-system, sans-serif;
+  --font-data:'Barlow Semi Condensed', 'Barlow', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+body{
+  background:var(--ink);
+  background-image:radial-gradient(ellipse at 20% -10%, #22231c 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 110%, #1a1c14 0%, transparent 50%);
+  color:var(--bone);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.45;
+  min-height:100vh;
+}
+a{color:var(--haul)}
+button{font-family:var(--font-body);cursor:pointer}
+:focus-visible{outline:3px solid var(--haul);outline-offset:2px;border-radius:4px}
+
+/* ---------- header ---------- */
+header{
+  padding:18px 20px 10px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  max-width:1060px;margin:0 auto;
+}
+.lockup{line-height:.9}
+.lockup .l1{font-family:var(--font-display);font-size:clamp(26px,5vw,38px);letter-spacing:.5px;color:var(--bone)}
+.lockup .l2{font-family:var(--font-display);font-size:clamp(26px,5vw,38px);letter-spacing:.5px;color:var(--ink);
+  background:var(--haul);display:inline-block;padding:1px 10px 0;
+  clip-path:polygon(1% 8%, 99% 0%, 100% 88%, 2% 100%);}
+.lockup .hq{font-family:var(--font-marker);color:var(--bone);font-size:clamp(18px,3.4vw,24px);margin-left:8px;
+  display:inline-block;transform:rotate(-4deg)}
+.head-meta{text-align:right;color:var(--dust);font-size:14px}
+.head-meta b{color:var(--bone);font-family:var(--font-data);font-size:16px;letter-spacing:.3px}
+.demo-tag{display:inline-block;font-family:var(--font-marker);color:var(--cash);border:2px dashed var(--cash);
+  padding:2px 10px;border-radius:6px;transform:rotate(2deg);font-size:13px;margin-top:4px}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(20,20,18,.92);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+.tabs{display:flex;gap:2px;max-width:1060px;margin:0 auto;overflow-x:auto;padding:8px 12px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  border:0;background:transparent;color:var(--dust);
+  font-family:var(--font-display);font-size:16px;letter-spacing:1px;text-transform:uppercase;
+  padding:9px 16px;border-radius:8px;white-space:nowrap;flex-shrink:0;
+}
+.tab:hover{color:var(--bone)}
+.tab[aria-selected="true"]{
+  color:var(--ink);background:var(--haul);
+  clip-path:polygon(2% 10%, 100% 0%, 98% 92%, 0% 100%);
+}
+main{max-width:1060px;margin:0 auto;padding:22px 20px 90px}
+section[hidden]{display:none}
+.sec-title{font-family:var(--font-display);font-size:clamp(22px,4vw,30px);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+.sec-title .mark{font-family:var(--font-marker);color:var(--haul);text-transform:none;letter-spacing:0;font-size:.85em}
+.sec-sub{color:var(--dust);margin-bottom:20px;max-width:64ch}
+
+/* ---------- cards & stats ---------- */
+.grid{display:grid;gap:14px}
+.stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:20px}
+.stat{
+  background:var(--asphalt);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;position:relative;overflow:hidden;
+}
+.stat::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--haul)}
+.stat.money::after{background:var(--cash)}
+.stat .k{font-family:var(--font-data);font-weight:700;font-size:clamp(24px,4vw,32px);line-height:1.05}
+.stat.money .k{color:var(--cash)}
+.stat .lbl{color:var(--dust);font-size:13px;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.stat .note{font-size:13px;color:var(--haul);margin-top:6px}
+
+.card{background:var(--asphalt);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card h3{font-family:var(--font-display);font-size:18px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px}
+.card h3 .sub{font-family:var(--font-body);font-weight:600;color:var(--dust);font-size:13px;letter-spacing:0;text-transform:none;margin-left:8px}
+
+/* ---------- load meter ---------- */
+.load-wrap{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:20px}
+@media(min-width:760px){.load-wrap{grid-template-columns:1.2fr 1fr}}
+.meter-track{height:34px;background:var(--ink);border:1px solid var(--line);border-radius:8px;overflow:hidden;position:relative}
+.meter-fill{height:100%;width:0;background:repeating-linear-gradient(-55deg,var(--haul),var(--haul) 14px,var(--haul-deep) 14px,var(--haul-deep) 28px);transition:width 1s ease}
+.meter-marks{display:flex;justify-content:space-between;font-size:12px;color:var(--dust);margin-top:5px;font-family:var(--font-data);font-weight:600}
+.meter-cap{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:var(--font-data);font-weight:700;color:var(--bone);text-shadow:0 1px 3px #000}
+
+/* ---------- money finder ---------- */
+.finds{display:grid;gap:10px}
+.find{display:flex;gap:12px;align-items:flex-start;background:var(--asphalt-2);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.find .ico{width:34px;height:34px;border-radius:50%;background:var(--haul);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.find.cash .ico{background:var(--cash)}
+.find b{display:block}
+.find span{color:var(--dust);font-size:14px}
+.find .amt{margin-left:auto;font-family:var(--font-data);font-weight:700;color:var(--cash);white-space:nowrap;font-size:18px}
+
+/* ---------- leads ---------- */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--asphalt);color:var(--dust);border-radius:99px;padding:6px 14px;font-size:14px;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--haul);color:var(--ink);border-color:var(--haul)}
+.leads{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.lead{display:flex;flex-direction:column;gap:10px}
+.lead-top{display:flex;align-items:center;gap:8px}
+.src{font-size:11px;font-weight:800;letter-spacing:.6px;padding:3px 8px;border-radius:4px;color:#fff;text-transform:uppercase}
+.src.fb{background:var(--fb)} .src.cl{background:var(--cl)} .src.ref{background:var(--haul-deep)}
+.status{margin-left:auto;font-size:12px;font-weight:700;color:var(--dust);text-transform:uppercase;letter-spacing:.5px}
+.status.new{color:var(--cash)} .status.accepted{color:var(--haul)}
+.lead h4{font-size:17px}
+.lead p{color:var(--dust);font-size:14px}
+.quote-line{display:flex;align-items:center;gap:8px;background:var(--ink);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;font-family:var(--font-data);font-weight:600}
+.quote-line .price{color:var(--haul);font-size:18px;font-weight:700;margin-left:auto}
+.lead-actions{display:flex;gap:8px;margin-top:auto}
+.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:800;font-size:14px;letter-spacing:.3px}
+.btn-go{background:var(--haul);color:var(--ink);flex:1}
+.btn-go:hover{background:#aed455}
+.btn-ghost{background:transparent;color:var(--dust);border:1px solid var(--line)}
+.btn-ghost:hover{color:var(--bone);border-color:var(--dust)}
+.btn-cash{background:var(--cash);color:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:default}
+.reply-tip{font-size:13px;color:var(--dust)}
+.reply-tip button{background:none;border:0;color:var(--haul);font-weight:700;padding:0}
+
+/* ---------- route ---------- */
+.route-wrap{display:grid;gap:16px}
+@media(min-width:860px){.route-wrap{grid-template-columns:1.15fr .85fr}}
+.map-card{padding:10px}
+.map-card svg{width:100%;height:auto;display:block;border-radius:8px}
+.stop-list{list-style:none;display:flex;flex-direction:column}
+.stop{display:flex;gap:12px;padding:11px 4px;border-bottom:1px dashed var(--line);align-items:flex-start}
+.stop:last-child{border-bottom:0}
+.stop .n{width:26px;height:26px;border-radius:50%;background:var(--haul);color:var(--ink);font-family:var(--font-data);font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.stop.dump .n{background:var(--bone)}
+.stop.scrap .n{background:var(--cash)}
+.stop b{display:block;font-size:15px}
+.stop span{color:var(--dust);font-size:13px}
+.stop .t{margin-left:auto;font-family:var(--font-data);font-weight:700;color:var(--dust);white-space:nowrap;font-size:14px}
+.opt-callout{background:linear-gradient(120deg,var(--haul-dark),#2a3a10);border:1px solid var(--haul-deep);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;align-items:center}
+.opt-callout .big{font-family:var(--font-display);font-size:22px;color:var(--haul);letter-spacing:.5px}
+.toggle-row{display:flex;align-items:center;gap:10px;background:var(--asphalt-2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-top:12px}
+.switch{position:relative;width:46px;height:26px;flex-shrink:0}
+.switch input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer}
+.slider{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.2s;pointer-events:none}
+.slider::before{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:var(--bone);top:3px;left:3px;transition:.2s}
+.switch input:checked + .slider{background:var(--cash)}
+.switch input:checked + .slider::before{transform:translateX(20px)}
+.fuel-line{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-family:var(--font-data);font-weight:600;color:var(--dust)}
+.fuel-line b{color:var(--bone)}
+
+/* ---------- schedule ---------- */
+.week{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;overflow-x:auto}
+@media(max-width:720px){.week{grid-template-columns:repeat(3,1fr)}}
+.day{background:var(--asphalt);border:1px solid var(--line);border-radius:8px;padding:10px;min-height:130px}
+.day .d{font-family:var(--font-data);font-weight:700;font-size:13px;color:var(--dust);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.day.today{border-color:var(--haul)}
+.day.today .d{color:var(--haul)}
+.job{background:var(--asphalt-2);border-left:3px solid var(--haul);border-radius:5px;padding:6px 8px;font-size:12.5px;margin-bottom:6px}
+.job .jt{font-family:var(--font-data);font-weight:700;color:var(--dust)}
+.job.big{border-left-color:var(--cash)}
+.slot{border:1.5px dashed var(--haul-deep);border-radius:5px;padding:6px 8px;font-size:12.5px;color:var(--haul);text-align:center}
+.sched-tips{margin-top:16px}
+
+/* ---------- flip it ---------- */
+.scrap-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:6px}
+.scrap{background:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 12px;text-align:center}
+.scrap .m{font-family:var(--font-data);font-weight:700;font-size:20px;color:var(--cash)}
+.scrap .n2{font-size:12px;color:var(--dust);text-transform:uppercase;letter-spacing:.6px}
+.items{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.item .ph{height:110px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:44px;
+  background:linear-gradient(140deg,#2c2d24,#1a1b15);border:1px solid var(--line)}
+.item .est{font-family:var(--font-data);font-weight:700;color:var(--cash)}
+.listing-out{background:var(--ink);border:1px solid var(--haul-deep);border-radius:8px;padding:12px;font-size:14px;white-space:pre-wrap;margin-top:10px;display:none;color:var(--bone)}
+.listing-out.show{display:block}
+.copy-row{display:none;gap:8px;margin-top:8px}
+.copy-row.show{display:flex}
+.sold-strip{margin-top:20px;display:flex;gap:12px;align-items:center;background:var(--asphalt-2);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;flex-wrap:wrap}
+.sold-strip .big{font-family:var(--font-data);font-weight:700;font-size:26px;color:var(--cash)}
+
+/* ---------- stamp watermark ---------- */
+.stamp{
+  font-family:var(--font-display);text-transform:uppercase;color:var(--haul);
+  border:3px solid var(--haul);border-radius:50%;width:120px;height:120px;
+  display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;line-height:1.15;
+  transform:rotate(-12deg);opacity:.85;letter-spacing:.5px;padding:10px;flex-shrink:0
+}
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--haul);color:var(--ink);font-weight:800;padding:12px 22px;border-radius:99px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);transition:transform .25s ease;z-index:99;max-width:92vw;text-align:center
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+footer{border-top:1px solid var(--line);color:var(--dust);text-align:center;padding:20px;font-size:13px}
+footer .mk{font-family:var(--font-marker);color:var(--haul)}
+</style>
+</head>
+<body>
+<div id="nojs-warn" style="background:#f5a623;color:#141412;font-weight:800;text-align:center;padding:12px 16px;font-size:14px">
+  ⚠ This previewer has JavaScript turned off, so buttons won't work. Open this file in Chrome, Safari, Edge, or Firefox — on a computer, just double-click it.
+</div>
+<header>
+  <div class="lockup">
+    <div class="l1">JUNK</div>
+    <div><span class="l2">REMOVAL</span><span class="hq">HQ</span></div>
+  </div>
+  <div class="head-meta">
+    <div>Thursday, July 16</div>
+    <b>520.809.3020</b><br>
+    <span class="demo-tag">demo — sample data</span>
+  </div>
+</header>
+
+<nav aria-label="Sections">
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-sec="today">Today</button>
+    <button class="tab" role="tab" aria-selected="false" data-sec="leads">Leads</button>
+    <button class="tab" role="tab" aria-selected="false" data-sec="route">Route</button>
+    <button class="tab" role="tab" aria-selected="false" data-sec="sched">Schedule</button>
+    <button class="tab" role="tab" aria-selected="false" data-sec="flip">Flip It</button>
+  </div>
+</nav>
+
+<main>
+<!-- ============ TODAY ============ -->
+<section id="today">
+  <h2 class="sec-title">Today's haul <span class="mark">at a glance</span></h2>
+  <p class="sec-sub">Every message, bid, and booking still comes through Facebook and Craigslist — this screen just pulls it into one place so nothing slips.</p>
+
+  <div class="grid stats">
+    <div class="stat"><div class="k" id="stat-jobs">3</div><div class="lbl">Jobs booked</div><div class="note" id="stat-jobs-note">1 open slot left</div></div>
+    <div class="stat money"><div class="k" id="stat-rev">$740</div><div class="lbl">Booked revenue</div><div class="note">+ $85 possible scrap</div></div>
+    <div class="stat"><div class="k" id="stat-miles">41 mi</div><div class="lbl">Drive today</div><div class="note">optimized order</div></div>
+    <div class="stat"><div class="k">1.4 t</div><div class="lbl">Est. load weight</div><div class="note">≈ $52 tip fee</div></div>
+  </div>
+
+  <div class="load-wrap">
+    <div class="card">
+      <h3>Truck load <span class="sub">estimated from booked jobs</span></h3>
+      <div class="meter-track"><div class="meter-fill" id="meter" style="width:0%"></div><span class="meter-cap" id="meter-cap">65% full</span></div>
+      <div class="meter-marks"><span>Empty</span><span>¼</span><span>½</span><span>¾</span><span>Full</span></div>
+      <p style="margin-top:10px;color:var(--dust);font-size:14px" id="meter-tip">Room for one more small pickup — <b style="color:var(--haul)">2 open leads are near today's route.</b> Check the Leads tab.</p>
+    </div>
+    <div class="card" style="display:flex;gap:14px;align-items:center">
+      <div class="stamp">You call,<br>we haul!</div>
+      <div>
+        <b style="font-size:17px">Next stop — 9:00 AM</b><br>
+        <span style="color:var(--dust)">Garage cleanout · Marta R. · Speedway &amp; Wilmot</span><br>
+        <span style="color:var(--haul);font-weight:700">½ load · $220 quoted</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Money finder <span class="sub">extra dollars hiding in today's jobs</span></h3>
+    <div class="finds">
+      <div class="find cash"><div class="ico">$</div><div><b>Metal in the Herrera shed job</b><span>Water heater + AC coil + wire — run the scrapyard before the landfill</span></div><div class="amt">+$85</div></div>
+      <div class="find cash"><div class="ico">$</div><div><b>Oak dresser flagged for resale</b><span>From yesterday's estate cleanout — listing text is ready in Flip It</span></div><div class="amt">+$60–90</div></div>
+      <div class="find"><div class="ico">★</div><div><b>2 reviews waiting to happen</b><span>Text Marta and Dave a Google review link after their jobs today</span></div><div class="amt">free ads</div></div>
+      <div class="find"><div class="ico">↻</div><div><b>Desert Sky Property Mgmt</b><span>60 days since their last cleanout — repeat customers book without shopping around</span></div><div class="amt">follow up</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEADS ============ -->
+<section id="leads" hidden>
+  <h2 class="sec-title">Leads &amp; bids <span class="mark">from your inbox</span></h2>
+  <p class="sec-sub">Forward a Facebook or Craigslist message here (or copy-paste it) and it becomes a card. Quote it, accept it, and it drops straight onto the route and schedule.</p>
+  <div class="chips" role="group" aria-label="Filter leads">
+    <button class="chip" aria-pressed="true" data-f="all">All (5)</button>
+    <button class="chip" aria-pressed="false" data-f="fb">Facebook</button>
+    <button class="chip" aria-pressed="false" data-f="cl">Craigslist</button>
+    <button class="chip" aria-pressed="false" data-f="new">New</button>
+  </div>
+  <div class="grid leads" id="lead-grid"></div>
+  <p class="reply-tip" style="margin-top:14px">💬 Saved replies: <button onclick="copyText('Hi! Thanks for reaching out. Could you send a couple photos of the pile? We can usually get you a firm price within the hour and often haul same-day. — Junk Removal Now, 520.809.3020')">quote request</button> · <button onclick="copyText('Good news — we can fit you in this week! We do the heavy lifting so you don’t have to. Which works better, morning or afternoon?')">booking</button> — one tap, paste into Messenger.</p>
+</section>
+
+<!-- ============ ROUTE ============ -->
+<section id="route" hidden>
+  <h2 class="sec-title">Route planner <span class="mark">burn less gas</span></h2>
+  <p class="sec-sub">Accepted jobs are sorted into the shortest loop, ending at Los Reales Landfill — or at the scrapyard first when the load's worth money.</p>
+  <div class="opt-callout">
+    <div class="big">−17 mi</div>
+    <div><b>Optimized vs. booking order:</b> saves about <b>$6.10 in fuel</b> and <b>45 minutes</b> today. That's an extra small job's worth of daylight every week.</div>
+  </div>
+  <div class="route-wrap" style="margin-top:16px">
+    <div class="card map-card">
+      <svg viewBox="0 0 560 430" role="img" aria-label="Stylized map of Tucson showing today's route">
+        <rect width="560" height="430" fill="#181913"/>
+        <!-- mountains -->
+        <path d="M0 60 L60 25 L110 55 L170 18 L230 52 L300 30 L360 58 L430 22 L500 50 L560 35 L560 0 L0 0 Z" fill="#20211a"/>
+        <!-- roads -->
+        <g stroke="#2e2f26" stroke-width="6" fill="none">
+          <path d="M0 330 L560 210"/> <!-- I-10 -->
+          <path d="M60 80 L60 400"/><path d="M180 70 L180 410"/><path d="M300 70 L300 410"/><path d="M420 70 L420 410"/>
+          <path d="M20 140 L540 140"/><path d="M20 240 L540 240"/><path d="M20 340 L540 340"/>
+        </g>
+        <g font-family="Barlow, sans-serif" font-size="11" fill="#6b6c5c">
+          <text x="470" y="205" transform="rotate(-12 470 205)">I-10</text>
+          <text x="24" y="134">Ina Rd</text>
+          <text x="24" y="234">Speedway Blvd</text>
+          <text x="24" y="334">Valencia Rd</text>
+          <text x="185" y="82">Oracle Rd</text>
+          <text x="305" y="82">Campbell Ave</text>
+          <text x="425" y="82">Wilmot Rd</text>
+        </g>
+        <!-- route line -->
+        <path id="route-line" d="M120 120 C 200 150, 260 200, 330 236 C 380 262, 300 300, 250 306 C 210 311, 230 350, 300 358 L 470 380" stroke="#9bc53d" stroke-width="5" fill="none" stroke-dasharray="10 7" stroke-linecap="round"/>
+        <!-- scrap detour (hidden until toggled) -->
+        <path id="scrap-line" d="M300 358 C 340 330, 380 330, 410 344 L 470 380" stroke="#f5a623" stroke-width="4" fill="none" stroke-dasharray="4 6" stroke-linecap="round" opacity="0"/>
+        <!-- stops -->
+        <g font-family="Barlow Semi Condensed, sans-serif" font-weight="700" font-size="13" text-anchor="middle">
+          <circle cx="120" cy="120" r="13" fill="#9bc53d"/><text x="120" y="124" fill="#141412">1</text>
+          <circle cx="330" cy="236" r="13" fill="#9bc53d"/><text x="330" y="240" fill="#141412">2</text>
+          <circle cx="250" cy="306" r="13" fill="#9bc53d"/><text x="250" y="310" fill="#141412">3</text>
+          <circle id="scrap-dot" cx="410" cy="344" r="12" fill="#f5a623" opacity="0"/><text id="scrap-txt" x="410" y="348" fill="#141412" opacity="0">$</text>
+          <circle cx="470" cy="380" r="14" fill="#f2efe6"/><text x="470" y="384" fill="#141412">🏁</text>
+        </g>
+        <g font-family="Barlow, sans-serif" font-size="11.5" fill="#b8b4a4">
+          <text x="120" y="102" text-anchor="middle">Marana — shed</text>
+          <text x="330" y="218" text-anchor="middle">Speedway &amp; Wilmot</text>
+          <text x="250" y="292" text-anchor="middle">South Tucson</text>
+          <text id="scrap-lbl" x="410" y="326" text-anchor="middle" opacity="0" fill="#f5a623">Scrapyard</text>
+          <text x="470" y="410" text-anchor="middle">Los Reales Landfill</text>
+        </g>
+        <text x="548" y="424" font-family="Permanent Marker, cursive" font-size="10" fill="#4a4b3e" text-anchor="end">not to scale — demo</text>
+      </svg>
+    </div>
+    <div class="card">
+      <h3>Thursday's stops</h3>
+      <ol class="stop-list" id="stop-list">
+        <li class="stop"><span class="n">1</span><div><b>Herrera shed teardown haul</b><span>Marana · ¾ load · metal heavy</span></div><span class="t">8:00a · $340</span></li>
+        <li class="stop"><span class="n">2</span><div><b>Marta R. — garage cleanout</b><span>Speedway &amp; Wilmot · ½ load</span></div><span class="t">10:30a · $220</span></li>
+        <li class="stop"><span class="n">3</span><div><b>Dave K. — fridge + couch</b><span>South Tucson · ¼ load</span></div><span class="t">12:15p · $180</span></li>
+        <li class="stop scrap" id="scrap-stop" style="display:none"><span class="n">$</span><div><b>Tucson Iron &amp; Metal</b><span>Drop water heater, coil, wire</span></div><span class="t">1:00p · +$85</span></li>
+        <li class="stop dump"><span class="n">🏁</span><div><b>Los Reales Landfill</b><span>5300 E Los Reales Rd · est. 1.4 t</span></div><span class="t" id="dump-time">1:20p · −$52</span></li>
+      </ol>
+      <div class="toggle-row">
+        <label class="switch"><input type="checkbox" id="scrap-toggle" aria-label="Add scrapyard stop"><span class="slider"></span></label>
+        <div style="font-size:14px"><b>Scrapyard first</b> — adds 4 mi, pays <b style="color:var(--cash)">+$85</b> and cuts the landfill weight</div>
+      </div>
+      <div class="fuel-line">
+        <span>Miles: <b id="rt-miles">41</b></span>
+        <span>Fuel @ 11 mpg: <b id="rt-fuel">$13.20</b></span>
+        <span>Day net: <b id="rt-net" style="color:var(--cash)">$675</b></span>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-go" style="flex:1;min-width:200px" onclick="openInMaps()">▶ Open route in Google Maps</button>
+        <button class="btn btn-ghost" onclick="copyStops()">Copy stop list</button>
+      </div>
+      <p style="font-size:12.5px;color:var(--dust);margin-top:8px">HQ picks the order — then hands it to the Google Maps app you already use for free turn-by-turn. No API fees, ever. <b style="color:var(--haul)">(This button really works — try it.)</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHEDULE ============ -->
+<section id="sched" hidden>
+  <h2 class="sec-title">This week <span class="mark">fill the gaps</span></h2>
+  <p class="sec-sub">Accepted jobs land here automatically. Dashed boxes are open slots — the app flags when a slot is worth more than usual.</p>
+  <div class="week" id="week"></div>
+  <div class="card sched-tips">
+    <h3>Booking smarter</h3>
+    <div class="finds">
+      <div class="find cash"><div class="ico">$</div><div><b>Saturday morning is open</b><span>Weekend estate &amp; storage cleanouts around Tucson book at roughly 25–30% higher prices — worth posting availability Friday night</span></div><div class="amt">premium</div></div>
+      <div class="find"><div class="ico">🌧</div><div><b>Monsoon season = yard debris</b><span>After a storm week, bump a "storm cleanup" post to the top of Marketplace and the neighborhood groups</span></div><div class="amt">seasonal</div></div>
+      <div class="find"><div class="ico">🚚</div><div><b>Pair small jobs by side of town</b><span>Two ¼-loads on the east side beat one ½-load across town — the route tab does the math</span></div><div class="amt">less fuel</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLIP IT ============ -->
+<section id="flip" hidden>
+  <h2 class="sec-title">Flip it <span class="mark">junk → cash</span></h2>
+  <p class="sec-sub">Snap a photo of anything decent before it hits the truck bed. The app writes the Facebook Marketplace / Craigslist listing for you — copy, paste, posted in under a minute.</p>
+  <div class="card" style="margin-bottom:16px">
+    <h3>Scrap prices — Tucson yards <span class="sub">sample numbers, updates daily in the real app</span></h3>
+    <div class="scrap-board">
+      <div class="scrap"><div class="m">$3.62/lb</div><div class="n2">Bare copper</div></div>
+      <div class="scrap"><div class="m">$0.52/lb</div><div class="n2">Alum. cans</div></div>
+      <div class="scrap"><div class="m">$0.09/lb</div><div class="n2">Shred steel</div></div>
+      <div class="scrap"><div class="m">$8–15</div><div class="n2">Car battery</div></div>
+      <div class="scrap"><div class="m">$25–40</div><div class="n2">Water heater</div></div>
+    </div>
+  </div>
+  <div class="grid items" id="item-grid"></div>
+  <div class="sold-strip">
+    <div class="big">$312</div>
+    <div><b>flipped this month</b><br><span style="color:var(--dust);font-size:14px">6 items sold · that's pure margin on loads you were already hauling</span></div>
+  </div>
+</section>
+</main>
+
+<div id="toast" role="status"></div>
+<footer>Demo concept for <b>Junk Removal Now</b> · 520.809.3020 · <span class="mk">We do the heavy lifting so you don't have to!</span></footer>
+<script>
+/* if this runs, the buttons work — hide the warning */
+document.getElementById('nojs-warn').style.display='none';
+
+/* offline install: register the service worker when hosted (https), skip for local file */
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  document.querySelectorAll('main > section').forEach(s=>s.hidden=true);
+  document.getElementById(t.dataset.sec).hidden=false;
+  window.scrollTo({top:0});
+}));
+
+/* ---------- toast ---------- */
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
+}
+function copyText(txt){
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject())
+    .then(()=>toast('Copied — paste it into Messenger'))
+    .catch(()=>toast('Copy not available in this preview'));
+}
+
+/* ---------- load meter ---------- */
+try{requestAnimationFrame(()=>{document.getElementById('meter').style.width='65%';});}
+catch(e){document.getElementById('meter').style.width='65%';}
+
+/* ---------- leads data ---------- */
+const leads=[
+ {id:1,src:'fb',srcName:'FB Marketplace',name:'Hot tub removal — Oro Valley',who:'Msg from Cheryl P.',desc:'"Old hot tub on back patio, gate access is 4 ft. Can you break it down?" · 3 photos',size:'Full load + labor',price:'$450–550',status:'new'},
+ {id:2,src:'fb',srcName:'FB group',name:'Storage unit cleanout — Ina Rd',who:'Msg from Tony V.',desc:'"10x10 unit, mostly boxes and a mattress. Need it empty by Friday." · 2 photos',size:'½ load',price:'$200–240',status:'new'},
+ {id:3,src:'cl',srcName:'Craigslist',name:'Yard debris + old fence — Vail',who:'Email reply',desc:'"Pile of mesquite branches and about 40 ft of tore-down wood fence."',size:'¾ load',price:'$260–300',status:'new'},
+ {id:4,src:'cl',srcName:'Craigslist',name:'Fridge + couch — South Tucson',who:'Dave K.',desc:'Accepted yesterday — on today\'s route as stop 3.',size:'¼ load',price:'$180',status:'accepted'},
+ {id:5,src:'ref',srcName:'Referral',name:'Estate cleanout — Sahuarita',who:'Marta R.\'s sister',desc:'"My sister said you were great. Whole house, first week of August."',size:'2–3 trips',price:'$900–1,200',status:'new'}
+];
+const grid=document.getElementById('lead-grid');
+function renderLeads(filter='all'){
+  grid.innerHTML='';
+  leads.filter(l=>filter==='all'||l.src===filter||(filter==='new'&&l.status==='new')).forEach(l=>{
+    const card=document.createElement('div');
+    card.className='card lead';
+    card.innerHTML=`
+      <div class="lead-top"><span class="src ${l.src}">${l.srcName}</span><span class="status ${l.status}">${l.status==='accepted'?'✓ Accepted':'New'}</span></div>
+      <h4>${l.name}</h4>
+      <p>${l.who} — ${l.desc}</p>
+      <div class="quote-line"><span>${l.size}</span><span class="price">${l.price}</span></div>
+      <div class="lead-actions">
+        ${l.status==='accepted'
+          ?'<button class="btn btn-go" disabled>On the route</button>'
+          :`<button class="btn btn-go" onclick="acceptLead(${l.id},this)">Accept &amp; schedule</button>
+             <button class="btn btn-ghost" onclick="toast('Quote reply copied — sample only')">Send quote</button>`}
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+function acceptLead(id,btn){
+  const l=leads.find(x=>x.id===id); l.status='accepted';
+  renderLeads(currentFilter);
+  toast(`✓ ${l.name.split(' — ')[0]} added to the schedule & route`);
+  // nudge the Today stats for effect
+  const j=document.getElementById('stat-jobs'); j.textContent=parseInt(j.textContent)+1;
+  document.getElementById('stat-jobs-note').textContent='day is full — nice';
+}
+let currentFilter='all';
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+  c.setAttribute('aria-pressed','true');
+  currentFilter=c.dataset.f; renderLeads(currentFilter);
+}));
+renderLeads();
+
+/* ---------- route scrap toggle ---------- */
+document.getElementById('scrap-toggle').addEventListener('change',e=>{
+  const on=e.target.checked;
+  ['scrap-line','scrap-dot','scrap-txt','scrap-lbl'].forEach(i=>document.getElementById(i).setAttribute('opacity',on?1:0));
+  document.getElementById('scrap-stop').style.display=on?'flex':'none';
+  document.getElementById('rt-miles').textContent=on?'45':'41';
+  document.getElementById('rt-fuel').textContent=on?'$14.50':'$13.20';
+  document.getElementById('rt-net').textContent=on?'$759':'$675';
+  document.getElementById('dump-time').textContent=on?'1:45p · −$41':'1:20p · −$52';
+  toast(on?'Scrapyard added: +$85, lighter dump load':'Scrapyard removed');
+});
+
+/* ---------- free Google Maps handoff ---------- */
+const routeStops={
+  origin:'Marana, AZ',
+  mid:['Speedway Blvd & Wilmot Rd, Tucson, AZ','South Tucson, AZ'],
+  scrap:'Tucson Iron and Metal, Tucson, AZ',
+  dest:'Los Reales Landfill, 5300 E Los Reales Rd, Tucson, AZ 85756'
+};
+function currentWaypoints(){
+  const w=[...routeStops.mid];
+  if(document.getElementById('scrap-toggle').checked) w.push(routeStops.scrap);
+  return w;
+}
+function openInMaps(){
+  const url='https://www.google.com/maps/dir/?api=1'
+    +'&origin='+encodeURIComponent(routeStops.origin)
+    +'&destination='+encodeURIComponent(routeStops.dest)
+    +'&waypoints='+currentWaypoints().map(encodeURIComponent).join('%7C')
+    +'&travelmode=driving';
+  window.open(url,'_blank');
+  toast('Route sent to Google Maps — free turn-by-turn');
+}
+function copyStops(){
+  copyText([routeStops.origin,...currentWaypoints(),routeStops.dest]
+    .map((s,i)=>(i+1)+'. '+s).join('\n'));
+}
+
+/* ---------- schedule ---------- */
+const week=[
+ {d:'Mon 13',jobs:[{t:'8a',n:'Appliance run — Midtown'},{t:'11a',n:'Yard cleanup — Flowing Wells'}]},
+ {d:'Tue 14',jobs:[{t:'9a',n:'Estate cleanout day 1 — Foothills',big:true}]},
+ {d:'Wed 15',jobs:[{t:'9a',n:'Estate cleanout day 2',big:true},{t:'2p',n:'Mattress pickup'}]},
+ {d:'Thu 16',today:true,jobs:[{t:'8a',n:'Shed teardown haul — Marana'},{t:'10:30a',n:'Garage — Speedway'},{t:'12:15p',n:'Fridge + couch'}],slot:'1 slot open · 3–5p'},
+ {d:'Fri 17',jobs:[{t:'10a',n:'Storage unit — Ina Rd?'}],slot:'afternoon open'},
+ {d:'Sat 18',jobs:[],slot:'OPEN — weekend rates ↑'}
+];
+const wk=document.getElementById('week');
+week.forEach(day=>{
+  const el=document.createElement('div');
+  el.className='day'+(day.today?' today':'');
+  el.innerHTML=`<div class="d">${day.d}${day.today?' · today':''}</div>`+
+    day.jobs.map(j=>`<div class="job${j.big?' big':''}"><span class="jt">${j.t}</span> ${j.n}</div>`).join('')+
+    (day.slot?`<div class="slot">${day.slot}</div>`:'');
+  wk.appendChild(el);
+});
+
+/* ---------- flip it ---------- */
+const items=[
+ {emoji:'🗄️',name:'Solid oak dresser',from:'Foothills estate cleanout',est:'$60–90',
+  listing:`SOLID OAK DRESSER — $75 OBO 🚚\n\nHeavy, well-built 6-drawer oak dresser. Drawers all slide smooth, no wobble. Normal wear on top, nothing broken. Came out of a Foothills estate — they don't make them like this anymore.\n\n• 58"W x 32"H x 18"D\n• Pickup near Speedway & Wilmot, we can help load\n• Cash, first come first served\n\nMore furniture posted weekly — Junk Removal Now, 520.809.3020. You call, we haul!`},
+ {emoji:'🚲',name:'Trek mountain bike',from:'Garage cleanout',est:'$50–80',
+  listing:`TREK 820 MOUNTAIN BIKE — $65 🚴\n\nRuns and rides. Tires hold air, shifts through all gears, brakes grab. Perfect starter or campus bike. A little garage dust, nothing a rag won't fix.\n\n• 19" frame, fits ~5'8"–6'0"\n• Pickup east side, evenings work best\n\nMore finds posted weekly — Junk Removal Now, 520.809.3020.`},
+ {emoji:'🔥',name:'Weber charcoal grill',from:'Storage unit',est:'$35–50',
+  listing:`WEBER 22" KETTLE GRILL — $40 🔥\n\nClassic Weber kettle, the one that lasts forever. Grate is clean, vents move free, no rust-through. Ready for the weekend.\n\n• Includes lid + ash catcher\n• Pickup south side, flexible times\n\nJunk Removal Now — 520.809.3020. We haul it away OR find it a new home.`}
+];
+const ig=document.getElementById('item-grid');
+items.forEach((it,i)=>{
+  const c=document.createElement('div');
+  c.className='card item';
+  c.innerHTML=`<div class="ph">${it.emoji}</div>
+    <b>${it.name}</b><br><span style="color:var(--dust);font-size:13px">${it.from}</span>
+    <div class="est" style="margin:6px 0 10px">est. ${it.est}</div>
+    <button class="btn btn-cash" style="width:100%" onclick="genListing(${i},this)">✍ Write my listing</button>
+    <div class="listing-out" id="out-${i}"></div>
+    <div class="copy-row" id="copy-${i}">
+      <button class="btn btn-go" style="flex:1" onclick="copyText(items[${i}].listing)">Copy for Marketplace</button>
+      <button class="btn btn-ghost" onclick="copyText(items[${i}].listing)">Craigslist</button>
+    </div>`;
+  ig.appendChild(c);
+});
+function genListing(i,btn){
+  const out=document.getElementById('out-'+i);
+  out.classList.add('show'); out.textContent='';
+  btn.disabled=true; btn.textContent='Writing…';
+  const txt=items[i].listing; let p=0;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){out.textContent=txt;finish();return}
+  const iv=setInterval(()=>{
+    p+=7; out.textContent=txt.slice(0,p);
+    if(p>=txt.length){clearInterval(iv);finish()}
+  },12);
+  function finish(){
+    document.getElementById('copy-'+i).classList.add('show');
+    btn.textContent='✓ Listing ready'; 
+  }
+}
+</script>
+</body>
+</html>
