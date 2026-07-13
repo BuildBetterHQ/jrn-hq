@@ -60,13 +60,24 @@ header{
   display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;
   max-width:1060px;margin:0 auto;
 }
-.lockup{line-height:.9}
-.lockup .l1{font-family:var(--font-display);font-size:clamp(26px,5vw,38px);letter-spacing:.5px;color:var(--bone)}
-.lockup .l2{font-family:var(--font-display);font-size:clamp(26px,5vw,38px);letter-spacing:.5px;color:var(--ink);
-  background:var(--haul);display:inline-block;padding:1px 10px 0;
-  clip-path:polygon(1% 8%, 99% 0%, 100% 88%, 2% 100%);}
-.lockup .hq{font-family:var(--font-marker);color:var(--bone);font-size:clamp(18px,3.4vw,24px);margin-left:8px;
-  display:inline-block;transform:rotate(-4deg)}
+.lockup{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.lockup .l1{
+  font-family:var(--font-display);
+  font-size:clamp(24px,5.2vw,34px);
+  letter-spacing:.5px;
+  color:var(--bone);
+  line-height:1;
+}
+.lockup .l2{
+  font-family:var(--font-display);
+  font-size:clamp(24px,5.2vw,34px);
+  letter-spacing:.5px;
+  line-height:1;
+  color:var(--ink);
+  background:var(--haul);
+  display:inline-block;
+  padding:4px 10px 2px;
+}
 .head-meta{text-align:right;color:var(--dust);font-size:14px}
 .head-meta b{color:var(--bone);font-family:var(--font-data);font-size:16px;letter-spacing:.3px}
 .demo-tag{display:inline-block;font-family:var(--font-marker);color:var(--cash);border:2px dashed var(--cash);
@@ -211,12 +222,12 @@ section[hidden]{display:none}
 .sold-strip{margin-top:20px;display:flex;gap:12px;align-items:center;background:var(--asphalt-2);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;flex-wrap:wrap}
 .sold-strip .big{font-family:var(--font-data);font-weight:700;font-size:26px;color:var(--cash)}
 
-/* ---------- stamp watermark ---------- */
-.stamp{
-  font-family:var(--font-display);text-transform:uppercase;color:var(--haul);
-  border:3px solid var(--haul);border-radius:50%;width:120px;height:120px;
-  display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;line-height:1.15;
-  transform:rotate(-12deg);opacity:.85;letter-spacing:.5px;padding:10px;flex-shrink:0
+/* ---------- next stop ---------- */
+.next-num{
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  background:var(--haul);color:var(--ink);
+  font-family:var(--font-data);font-weight:700;font-size:24px;
+  display:flex;align-items:center;justify-content:center;
 }
 
 /* ---------- toast ---------- */
@@ -228,7 +239,6 @@ section[hidden]{display:none}
 #toast.show{transform:translateX(-50%) translateY(0)}
 
 footer{border-top:1px solid var(--line);color:var(--dust);text-align:center;padding:20px;font-size:13px}
-footer .mk{font-family:var(--font-marker);color:var(--haul)}
 </style>
 </head>
 <body>
@@ -237,12 +247,10 @@ footer .mk{font-family:var(--font-marker);color:var(--haul)}
 </div>
 <header>
   <div class="lockup">
-    <div class="l1">JUNK</div>
-    <div><span class="l2">REMOVAL</span><span class="hq">HQ</span></div>
+    <span class="l1">JUNK REMOVAL NOW</span><span class="l2">HQ</span>
   </div>
   <div class="head-meta">
     <div>Thursday, July 16</div>
-    <b>520.809.3020</b><br>
     <span class="demo-tag">demo — sample data</span>
   </div>
 </header>
@@ -277,12 +285,15 @@ footer .mk{font-family:var(--font-marker);color:var(--haul)}
       <div class="meter-marks"><span>Empty</span><span>¼</span><span>½</span><span>¾</span><span>Full</span></div>
       <p style="margin-top:10px;color:var(--dust);font-size:14px" id="meter-tip">Room for one more small pickup — <b style="color:var(--haul)">2 open leads are near today's route.</b> Check the Leads tab.</p>
     </div>
-    <div class="card" style="display:flex;gap:14px;align-items:center">
-      <div class="stamp">You call,<br>we haul!</div>
-      <div>
-        <b style="font-size:17px">Next stop — 9:00 AM</b><br>
-        <span style="color:var(--dust)">Garage cleanout · Marta R. · Speedway &amp; Wilmot</span><br>
-        <span style="color:var(--haul);font-weight:700">½ load · $220 quoted</span>
+    <div class="card">
+      <h3>Next stop <span class="sub">9:00 AM</span></h3>
+      <div style="display:flex;gap:14px;align-items:center">
+        <div class="next-num">2</div>
+        <div>
+          <b style="font-size:17px">Garage cleanout — Marta R.</b><br>
+          <span style="color:var(--dust)">Speedway &amp; Wilmot · ½ load</span><br>
+          <span style="color:var(--haul);font-weight:700">$220 quoted</span>
+        </div>
       </div>
     </div>
   </div>
@@ -428,7 +439,7 @@ footer .mk{font-family:var(--font-marker);color:var(--haul)}
 </main>
 
 <div id="toast" role="status"></div>
-<footer>Demo concept for <b>Junk Removal Now</b> · 520.809.3020 · <span class="mk">We do the heavy lifting so you don't have to!</span></footer>
+<footer>Junk Removal Now HQ · demo with sample data</footer>
 <script>
 /* if this runs, the buttons work — hide the warning */
 document.getElementById('nojs-warn').style.display='none';
