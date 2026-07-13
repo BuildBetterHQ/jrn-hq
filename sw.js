@@ -1,5 +1,5 @@
 /* JRN HQ — offline-first service worker */
-const CACHE = 'jrn-hq-v1';
+const CACHE = 'jrn-hq-v3';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
